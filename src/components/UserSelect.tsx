@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import type { User } from "../types.ts";
 
+type UserSelectProps = {
+  selected: User | null;
+  handleChange: (value: User | null) => void;
+};
+
 const AssigneeOption = ({ option }: { option: User }) => {
   return (
     <div className="flex items-center gap-2">
@@ -17,13 +22,13 @@ const AssigneeOption = ({ option }: { option: User }) => {
   );
 };
 
-export const UserSelect = ({ selected, handleChange }) => {
-  const [users, setUsers] = useState([]);
+export const UserSelect = ({ selected, handleChange }: UserSelectProps) => {
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     fetch("/api/users")
       .then((r) => r.json())
-      .then((data) => setUsers(data));
+      .then((data: User[]) => setUsers(data));
   }, []);
 
   return (

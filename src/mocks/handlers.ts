@@ -51,6 +51,20 @@ export const handlers = [
     return HttpResponse.json(result);
   }),
 
+  http.get("/api/users/:id", ({ params }) => {
+    const id = Number(params.id);
+    const user = (users as User[]).find((u) => u.id === id);
+
+    if (!user) {
+      return HttpResponse.json(
+        { error: `User ${id} not found` },
+        { status: 404 },
+      );
+    }
+
+    return HttpResponse.json(user);
+  }),
+
   http.get("/api/board/:id", ({ request }) => {
     const url = new URL(request.url);
     const q = url.searchParams.get("q") ?? "";

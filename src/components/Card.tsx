@@ -12,7 +12,7 @@ type CardProps = {
 export const Card = ({ id, title, assignee }: CardProps) => {
   const [open, setOpen] = useState(false);
 
-  function handleAssignUser(user: User) {
+  function handleAssignUser(user: User | null) {
     if (!user) return;
     console.log(user);
     setOpen(false);
@@ -62,7 +62,10 @@ export const Card = ({ id, title, assignee }: CardProps) => {
                 Assign user
               </div>
 
-              <UserSelect selected={assignee} handleChange={handleAssignUser} />
+              <UserSelect
+                selected={assignee ?? null}
+                handleChange={handleAssignUser}
+              />
               <Popover.Arrow className="fill-white drop-shadow" />
             </Popover.Content>
           </Popover.Portal>
